@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="showroom">
+  <title>หัวข้อปัญหาพิเศษและงานวิจัยระดับปริญญาตรี · กลุ่มวิจัย PTEM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Pastel Purple & Soft Lavender Palette (Showroom Architecture) */
+      --background: #fbf9fe;
+      --surface-container-low: #f3eefb;
+      --surface-container: #e8dff7;
+      --surface-container-high: #dcd0f2;
+
+      /* Ink */
+      --on-surface: #231934;
+      --on-surface-variant: #55496b;
+
+      /* Rules */
+      --outline: #cbbce6;
+      --outline-variant: #e4dbf3;
+
+      /* Accents */
+      --primary: #6d44b8;
+      --primary-hover: #5a34a0;
+      --on-primary: #ffffff;
+      --primary-container: #ede4fc;
+      --on-primary-container: #4c2a8c;
+      --secondary: #9d4c8b;
+      --secondary-container: #f9e6f4;
+      --on-secondary-container: #6e285f;
+      --tertiary: #2e1f47;
+      --error: #c42b4b;
+      --on-error: #ffffff;
+
+      /* Data series */
+      --data-1: #6d44b8;
+      --data-2: #9d4c8b;
+      --data-3: #2a7b6f;
+      --data-4: #4d6ec4;
+      --data-context: #b7aacf;
+
+      /* Semantic */
+      --positive: #257a5b;
+      --positive-container: #e3f5ee;
+      --warning: #9a5b13;
+      --focus: #6d44b8;
+
+      /* Fonts (Thai-first per non-Latin guidelines) */
+      --font-headline: 'Noto Sans Thai', 'Inter Tight', sans-serif;
+      --font-body: 'Noto Sans Thai', 'Inter', sans-serif;
+      --font-label: 'Noto Sans Thai', 'Inter', 'IBM Plex Mono', sans-serif;
+      --font-mono: 'IBM Plex Mono', 'Noto Sans Thai', monospace;
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(2.15rem, 1.45rem + 2.6vw, 3.35rem);
+      --headline-size: clamp(1.65rem, 1.25rem + 1.5vw, 2.35rem);
+      --subhead-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.4rem);
+      --body-size: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
+      --label-size: clamp(0.78rem, 0.75rem + 0.12vw, 0.85rem);
+
+      /* Shape */
+      --rounded: 9999px;
+      --rounded-md: 0.875rem;
+      --rounded-lg: 1.25rem;
+      --rounded-full: 9999px;
+
+      /* Effects */
+      --headline-tracking: 0;
+      --figure-tracking: -0.02em;
+      --tile-shadow-hover: 0 10px 30px rgb(68 38 118 / 0.09);
+      --focus-ring: 0 0 0 3px rgb(109 68 184 / 0.28);
+      --chevron: " \203A";
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+    header { position: static !important; }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding-inline: var(--space-lg);
+    }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      max-width: 1180px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus visibility */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      box-shadow: var(--focus-ring);
+    }
+
+    /* Top Bar */
+    .topbar {
+      padding-block: var(--space-md);
+      background-color: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-headline);
+      font-weight: 700;
+      color: var(--on-surface);
+      font-size: 1.05rem;
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--rounded-md);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .nav-link:hover {
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+    }
+
+    /* Tonal Section Bands (Showroom) */
+    .band {
+      padding-block: var(--space-2xl);
+    }
+    .band.alt {
+      background-color: var(--surface-container-low);
+    }
+    .band.alt .tile {
+      background-color: var(--background);
+    }
+
+    /* Centered Headline Stack (Showroom) */
+    .headline-stack {
+      text-align: center;
+      max-width: 780px;
+      margin-inline: auto;
+      margin-bottom: var(--space-xl);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.35rem 0.95rem;
+      border-radius: var(--rounded);
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+    }
+    .headline-stack h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      line-height: 1.18;
+      margin: 0;
+      color: var(--on-surface);
+      letter-spacing: var(--headline-tracking);
+    }
+    .headline-stack h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      line-height: 1.24;
+      margin: 0;
+      color: var(--on-surface);
+      letter-spacing: var(--headline-tracking);
+    }
+    .headline-stack .lede {
+      color: var(--on-surface-variant);
+      font-size: clamp(1.03rem, 0.98rem + 0.3vw, 1.16rem);
+      max-width: 62ch;
+      margin: var(--space-md) auto 0;
+    }
+
+    /* Hero Specific */
+    .hero-band {
+      padding-block: var(--space-3xl) var(--space-2xl);
+      background: linear-gradient(180deg, var(--surface-container-low) 0%, var(--background) 100%);
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: 0.7rem 1.65rem;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+      font-size: 0.96rem;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0.7rem 1.35rem;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 500;
+      font-size: 0.94rem;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .btn-secondary:hover {
+      background-color: var(--surface-container-high);
+    }
+    .link-more {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: var(--space-sm);
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .link-more::after { content: var(--chevron); }
+    .link-more:hover { text-decoration: underline; }
+
+    /* Hero Greeting Pill Strip (Friendly Intro without any stat numbers) */
+    .welcome-note {
+      max-width: 68ch;
+      margin: var(--space-xl) auto 0;
+      padding: var(--space-lg);
+      border-radius: var(--rounded-lg);
+      background-color: var(--surface-container-low);
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    .welcome-note-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--rounded-md);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .welcome-note p {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.98rem;
+    }
+    .welcome-note strong {
+      color: var(--on-surface);
+    }
+
+    /* Borderless Rounded Tiles */
+    .tile {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      border: 0;
+      transition: box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .tile-interactive:hover {
+      box-shadow: var(--tile-shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Pilot Scale Dual Grid */
+    .pilot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .pilot-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .pilot-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .pilot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--rounded);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: var(--label-size);
+      font-weight: 600;
+    }
+    .pilot-badge.orchid {
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+    }
+    .pilot-card h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      line-height: 1.35;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .pilot-summary {
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .pilot-block {
+      background-color: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md) var(--space-lg);
+    }
+    .band.alt .pilot-block {
+      background-color: var(--surface-container-low);
+    }
+    .pilot-block-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 var(--space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .pilot-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: var(--on-surface-variant);
+      font-size: 0.95rem;
+    }
+    .pilot-list li + li {
+      margin-top: var(--space-xs);
+    }
+    .pilot-list strong {
+      color: var(--on-surface);
+    }
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--rounded);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: var(--label-size);
+      font-weight: 500;
+    }
+    .chip.subtle {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    /* Interactive Pilot-Scale Workbench */
+    .workbench {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+    }
+    .band.alt .workbench {
+      background-color: var(--background);
+    }
+    .workbench-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .workbench-top h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      margin: 0;
+    }
+    .segmented {
+      display: inline-flex;
+      padding: 4px;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .seg-btn {
+      min-height: 44px;
+      padding: 0.45rem 1.1rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: transparent;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .seg-btn[aria-pressed="true"] {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .seg-btn:hover:not([aria-pressed="true"]) {
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .step-btn {
+      width: 100%;
+      text-align: left;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-md);
+      border: 0;
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .band .step-btn {
+      background-color: var(--background);
+    }
+    .band.alt .step-btn {
+      background-color: var(--surface-container-low);
+    }
+    .step-btn:hover {
+      background-color: var(--surface-container);
+    }
+    .step-btn[aria-pressed="true"] {
+      background-color: var(--primary-container);
+      box-shadow: inset 3px 0 0 var(--primary);
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-btn[aria-pressed="true"] .step-num {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .step-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-sub {
+      font-size: 0.88rem;
+      color: var(--on-surface-variant);
+      display: block;
+    }
+    .workbench-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .step-detail-box {
+      padding: var(--space-lg);
+      border-radius: var(--rounded-md);
+      background-color: var(--surface-container-low);
+    }
+    .band.alt .step-detail-box {
+      background-color: var(--surface-container-low);
+    }
+    .step-detail-box h4 {
+      margin: 0 0 var(--space-xs) 0;
+      font-family: var(--font-headline);
+      font-size: 1.08rem;
+      color: var(--on-surface);
+    }
+    .step-detail-box p {
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface-variant);
+      font-size: 0.94rem;
+    }
+    .param-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .chart-card {
+      padding: var(--space-lg);
+      border-radius: var(--rounded-md);
+      background-color: var(--surface-container-low);
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .chart-title {
+      font-weight: 600;
+      font-size: 0.96rem;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .chart-caption {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .chart-wrap {
+      position: relative;
+      min-height: 250px;
+      height: 250px;
+      width: 100%;
+    }
+
+    /* Researcher Section */
+    .researcher-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .mentor-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .mentor-identity {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .mentor-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--rounded-lg);
+      background: linear-gradient(135deg, var(--primary-container) 0%, var(--secondary-container) 100%);
+      color: var(--on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.45rem;
+      flex-shrink: 0;
+    }
+    .mentor-name {
+      font-family: var(--font-headline);
+      font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.65rem);
+      font-weight: 700;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .mentor-role {
+      margin: var(--space-xs) 0 0;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .mentor-bio {
+      margin: 0;
+      color: var(--on-surface-variant);
+      max-width: 62ch;
+    }
+    .mentor-pillars {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .pillar-item {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+    }
+    .band.alt .pillar-item {
+      background-color: var(--background);
+    }
+    .pillar-item h4 {
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .pillar-item p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Past Research Showcase */
+    .filter-toolbar {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .band.alt .filter-toolbar {
+      background-color: var(--background);
+    }
+    .search-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      color: var(--on-surface-variant);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.6rem 1rem 0.6rem 2.75rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background-color: var(--background);
+      color: var(--on-surface);
+      transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .filter-btn {
+      min-height: 44px;
+      padding: 0.45rem 1rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: var(--surface-container);
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .filter-btn:hover {
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .filter-btn[aria-pressed="true"] {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      color: var(--on-surface-variant);
+      font-size: 0.92rem;
+    }
+
+    /* Adaptive Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .card-wrapper {
+      container-type: inline-size;
+    }
+    .paper-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      border-radius: var(--rounded-lg);
+      background-color: var(--surface-container-low);
+      transition: box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .band.alt .paper-card {
+      background-color: var(--background);
+    }
+    .paper-card:hover {
+      box-shadow: var(--tile-shadow-hover);
+      transform: translateY(-2px);
+    }
+    .paper-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .paper-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .paper-year {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+    .paper-title {
+      font-family: var(--font-headline);
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.38;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .paper-journal {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      font-weight: 500;
+      margin: 0;
+    }
+    .paper-summary {
+      font-size: 0.94rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .paper-specs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      background-color: var(--background);
+      font-size: 0.88rem;
+    }
+    .band.alt .paper-specs {
+      background-color: var(--surface-container-low);
+    }
+    @container (min-width: 390px) {
+      .paper-specs {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+      }
+    }
+    .spec-item strong {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+    .spec-item span {
+      color: var(--on-surface);
+      font-weight: 500;
+    }
+    .paper-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+    .btn-ghost {
+      min-height: 44px;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .btn-ghost:hover {
+      background-color: var(--primary-container);
+    }
+    .btn-bookmark {
+      min-height: 44px;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background-color: var(--background);
+      color: var(--on-surface-variant);
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    .btn-bookmark:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .btn-bookmark[aria-pressed="true"] {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-color: var(--primary);
+    }
+    .paper-drawer {
+      margin-top: var(--space-sm);
+      padding: var(--space-md);
+      border-radius: var(--rounded-md);
+      background-color: var(--primary-container);
+      color: var(--on-surface);
+      font-size: 0.9rem;
+    }
+    .paper-drawer[hidden] {
+      display: none;
+    }
+    .paper-drawer p {
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .paper-drawer p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Saved Topics Tray */
+    .saved-tray {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      border-radius: var(--rounded-lg);
+      background-color: var(--surface-container-low);
+    }
+    .band.alt .saved-tray {
+      background-color: var(--background);
+    }
+    .saved-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-bottom: var(--space-sm);
+    }
+    .saved-header h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: 1.08rem;
+    }
+    .saved-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .saved-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .saved-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--rounded);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .saved-remove {
+      border: 0;
+      background: transparent;
+      color: var(--on-primary-container);
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: var(--rounded);
+      font-weight: 700;
+      min-width: 28px;
+      min-height: 28px;
+    }
+    .saved-remove:hover {
+      background-color: var(--surface-container-high);
+    }
+    .empty-state {
+      text-align: center;
+      padding: var(--space-xl);
+      border-radius: var(--rounded-lg);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+    }
+    .band.alt .empty-state {
+      background-color: var(--background);
+    }
+    .status-toast {
+      margin-top: var(--space-sm);
+      font-size: 0.88rem;
+      color: var(--positive);
+      font-weight: 500;
+    }
+    .paper-title-spaced {
+      margin-top: var(--space-sm);
+    }
+    .paper-summary-spaced {
+      margin-top: var(--space-sm);
+    }
+    .paper-en-ref {
+      color: var(--on-surface-variant);
+      font-size: 0.84rem;
+    }
+    .saved-empty-msg {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.92rem;
+    }
+
+    /* Footer */
+    footer {
+      padding-block: var(--space-2xl);
+      border-top: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: var(--space-xl);
+    }
+    .footer-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 1rem;
+    }
+    .source-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+    .source-list li + li {
+      margin-top: 4px;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .pilot-grid,
+      .workbench-grid,
+      .researcher-layout,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .page-grid { grid-template-columns: 1fr; }
+      .container { padding-inline: var(--space-md); }
+      .band { padding-block: var(--space-xl); }
+      .hero-band { padding-block: var(--space-xl); }
+      .tile, .workbench { padding: var(--space-lg); }
+      .mentor-pillars,
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+      .welcome-note {
+        flex-direction: column;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <i data-lucide="flask-conical" width="20" height="20"></i>
+        </span>
+        <span>กลุ่มวิจัย PTEM · งานวิจัยสำหรับนักศึกษาปริญญาตรี</span>
+      </div>
+      <nav class="nav-links" aria-label="เมนูหลักของหน้า">
+        <a class="nav-link" href="#pilot-projects">2 หัวข้อปัญหาพิเศษ Pilot Scale</a>
+        <a class="nav-link" href="#researcher">รู้จักอาจารย์ที่ปรึกษา</a>
+        <a class="nav-link" href="#past-research">คลังผลงานวิจัยที่ผ่านมา</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section: Warm welcome, zero stat counters -->
+    <section class="hero-band">
+      <div class="container">
+        <div class="headline-stack">
+          <div class="eyebrow">
+            <i data-lucide="sparkles" width="15" height="15" aria-hidden="true"></i>
+            <span>ยินดีต้อนรับนักศึกษาปริญญาตรีสู่กลุ่มวิจัย PTEM</span>
+          </div>
+          <h1>เปลี่ยนวัสดุเหลือใช้สู่นวัตกรรมสิ่งแวดล้อมในระดับ Pilot Scale</h1>
+          <p class="lede">
+            เปิดพื้นที่ให้น้องๆ นักศึกษาปริญญาตรีได้เข้ามาเรียนรู้ ลงมือทำโครงงานปัญหาพิเศษ และฝึกทักษะวิศวกรรมวัสดุและสิ่งแวดล้อมจากโจทย์จริง ตั้งแต่การสังเคราะห์ถ่านรูพรุนไปจนถึงการทดสอบระบบบำบัดน้ำเสียอย่างเป็นระบบ
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#pilot-projects">
+              <i data-lucide="layers" width="18" height="18" aria-hidden="true"></i>
+              <span>สำรวจ 2 หัวข้อปัญหาพิเศษหลัก</span>
+            </a>
+            <a class="link-more" href="#past-research">ดูคลังผลงานวิจัยที่ผ่านมา</a>
+          </div>
+        </div>
+
+        <div class="welcome-note reveal">
+          <div class="welcome-note-icon" aria-hidden="true">
+            <i data-lucide="graduation-cap" width="22" height="22"></i>
+          </div>
+          <div>
+            <p>
+              <strong>ไม่ต้องกังวลหากยังไม่มีพื้นฐานงานวิจัยมาก่อน:</strong> การทำปัญหาพิเศษกับกลุ่ม PTEM เน้นการเรียนรู้แบบค่อยเป็นค่อยไปควบคู่กับการลงมือปฏิบัติจริงในห้องปฏิบัติการและชุดทดสอบขยายขนาด เพื่อให้นักศึกษาเข้าใจทั้งหลักการทางวิทยาศาสตร์และการประยุกต์ใช้เชิงวิศวกรรมอย่างมั่นใจ
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: 2 Pilot Scale Senior Project Highlights -->
+    <section id="pilot-projects" class="band alt">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <div class="eyebrow">
+            <i data-lucide="compass" width="15" height="15" aria-hidden="true"></i>
+            <span>ไฮไลต์หัวข้อปัญหาพิเศษสำหรับนักศึกษาปริญญาตรี</span>
+          </div>
+          <h2>2 ทิศทางวิจัยระดับ Pilot Scale ที่พร้อมให้นักศึกษาลงมือทำจริง</h2>
+          <p class="lede">
+            ก้าวข้ามการทดลองขนาดเล็กในบีกเกอร์ สู่การเรียนรู้กระบวนการขยายขนาด ควบคุมตัวแปรระบบ และวิเคราะห์สมบัติวัสดุด้วยเครื่องมือมาตรฐานระดับงานวิจัย
+          </p>
+        </div>
+
+        <div class="pilot-grid">
+          <!-- Topic 1 -->
+          <article class="tile tile-interactive pilot-card reveal">
+            <div class="pilot-header">
+              <span class="pilot-badge">หัวข้อที่ 1 · Material Engineering</span>
+            </div>
+            <h3>การผลิตถ่านรูพรุนเชิงวิศวกรรมในระดับ Pilot Scale</h3>
+            <p class="pilot-summary">
+              ศึกษาและขยายขนาดกระบวนการเปลี่ยนชีวมวลเหลือใช้ทางการเกษตรและอุตสาหกรรม (เช่น เปลือกข้าวโพด กะลาแมคคาเดเมีย เศษไม้ฮาร์ดบอร์ด หรือกระดูกสัตว์) รวมถึงสารตั้งต้นพอลิเมอร์ ให้เป็นถ่านรูพรุนมูลค่าสูงที่มีโครงสร้างรูพรุนและสมบัติแม่เหล็กเฉพาะทาง
+            </p>
+
+            <div class="pilot-block">
+              <p class="pilot-block-title">
+                <i data-lucide="star" width="15" height="15" aria-hidden="true"></i>
+                <span>จุดเด่นและประโยชน์ของหัวข้อ</span>
+              </p>
+              <ul class="pilot-list">
+                <li><strong>ลดขยะและมลพิษ:</strong> เพิ่มมูลค่าให้วัสดุเหลือทิ้ง ลดปัญหาการเผาในที่โล่งที่ก่อให้เกิดฝุ่น PM2.5 และ PM10</li>
+                <li><strong>ออกแบบรูพรุนได้ตรงเป้าหมาย:</strong> ปรับสัดส่วนรูพรุนระดับไมโครพอร์และเมโซพอร์ รวมถึงเติมอนุภาคเหล็กแม่เหล็กเพื่อให้ง่ายต่อการแยกเก็บหลังใช้งาน</li>
+              </ul>
+            </div>
+
+            <div class="pilot-block">
+              <p class="pilot-block-title">
+                <i data-lucide="wrench" width="15" height="15" aria-hidden="true"></i>
+                <span>ทักษะปฏิบัติการจริงที่นักศึกษาจะได้เรียนรู้</span>
+              </p>
+              <div class="skill-chips">
+                <span class="chip">การขยายขนาดการผลิต (Scale-up)</span>
+                <span class="chip">การควบคุมเตาเผาไพโรไลซิสและกระตุ้นด้วย CO₂</span>
+                <span class="chip subtle">วิเคราะห์พื้นที่ผิวรูพรุน BET</span>
+                <span class="chip subtle">ตรวจโครงสร้างผลึก XRD</span>
+                <span class="chip subtle">ถ่ายภาพพื้นผิว SEM-EDX</span>
+                <span class="chip subtle">วิเคราะห์หมู่ฟังก์ชัน FTIR / XPS</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Topic 2 -->
+          <article class="tile tile-interactive pilot-card reveal">
+            <div class="pilot-header">
+              <span class="pilot-badge orchid">หัวข้อที่ 2 · Water &amp; Catalysis</span>
+            </div>
+            <h3>การบำบัดน้ำเสียด้วยกระบวนการดูดซับและเร่งปฏิกิริยาในระดับ Pilot Scale</h3>
+            <p class="pilot-summary">
+              นำวัสดุดูดซับและตัวเร่งปฏิกิริยาที่พัฒนาขึ้นไปทดสอบในระบบบำบัดน้ำเสียแบบต่อเนื่องและคอลัมน์เบดนิ่ง (Fixed-bed Column) เพื่อกำจัดสีย้อมอุตสาหกรรม ยาปฏิชีวนะ สารกำจัดวัชพืช และสารตั้งต้นไตรฮาโลมีเทนในน้ำธรรมชาติ
+            </p>
+
+            <div class="pilot-block">
+              <p class="pilot-block-title">
+                <i data-lucide="star" width="15" height="15" aria-hidden="true"></i>
+                <span>จุดเด่นและประโยชน์ของหัวข้อ</span>
+              </p>
+              <ul class="pilot-list">
+                <li><strong>เชื่อมโยงทฤษฎีสู่งานระบบจริง:</strong> ต่อยอดข้อมูลจลนพลศาสตร์และไอโซเทอร์มไปสู่แบบจำลองคอลัมน์ BDST เพื่อประเมินอายุการใช้งานของระบบบำบัด</li>
+                <li><strong>เน้นความยั่งยืนและใช้ซ้ำได้:</strong> ทดสอบประสิทธิภาพในน้ำจริงร่วมกับการแยกด้วยแม่เหล็กและการฟื้นฟูสภาพวัสดุ (Regeneration) หลายวัฏจักร</li>
+              </ul>
+            </div>
+
+            <div class="pilot-block">
+              <p class="pilot-block-title">
+                <i data-lucide="wrench" width="15" height="15" aria-hidden="true"></i>
+                <span>ทักษะปฏิบัติการจริงที่นักศึกษาจะได้เรียนรู้</span>
+              </p>
+              <div class="skill-chips">
+                <span class="chip">การควบคุมระบบคอลัมน์ไหลต่อเนื่อง</span>
+                <span class="chip">การสร้างกราฟ Breakthrough Curve &amp; BDST</span>
+                <span class="chip subtle">การฟื้นฟูสภาพวัสดุ (NaOH / Ethanol / Thermal)</span>
+                <span class="chip subtle">วิเคราะห์คุณภาพน้ำ DOC / UV-254 / COD</span>
+                <span class="chip subtle">วิเคราะห์สเปกตรัมเรืองแสง FEEM</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Interactive Pilot-Scale Workbench -->
+        <div class="workbench reveal" aria-label="เครื่องมือสำรวจขั้นตอนการทำงานระดับ Pilot Scale">
+          <div class="workbench-top">
+            <div>
+              <h3>เจาะลึกขั้นตอนปฏิบัติการและข้อมูลเชิงวิทยาศาสตร์จากงานวิจัย</h3>
+              <p class="chart-caption">สลับเลือกหัวข้อและคลิกแต่ละขั้นตอนเพื่อดูรายละเอียดสิ่งที่นักศึกษาจะได้ฝึกปฏิบัติจริง</p>
+            </div>
+            <div class="segmented" role="group" aria-label="เลือกหัวข้อ Pilot Scale">
+              <button type="button" class="seg-btn" id="track-btn-carbon" aria-pressed="true" onclick="selectTrack('carbon')">
+                1. ผลิตถ่านรูพรุน Pilot Scale
+              </button>
+              <button type="button" class="seg-btn" id="track-btn-water" aria-pressed="false" onclick="selectTrack('water')">
+                2. บำบัดน้ำเสีย Pilot Scale
+              </button>
+            </div>
+          </div>
+
+          <div class="workbench-grid">
+            <div class="step-list" id="step-list" role="group" aria-label="ขั้นตอนปฏิบัติการ"></div>
+
+            <div class="workbench-panel">
+              <div class="step-detail-box" id="step-detail-box">
+                <h4 id="step-detail-title"></h4>
+                <p id="step-detail-desc"></p>
+                <div class="param-row" id="step-detail-params"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-header">
+                  <p class="chart-title" id="chart-title"></p>
+                  <p class="chart-caption" id="chart-source"></p>
+                </div>
+                <div class="chart-wrap">
+                  <canvas id="pilotChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Researcher Profile -->
+    <section id="researcher" class="band">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <div class="eyebrow">
+            <i data-lucide="user-check" width="15" height="15" aria-hidden="true"></i>
+            <span>อาจารย์ผู้ดูแลและให้คำปรึกษา</span>
+          </div>
+          <h2>เรียนรู้เคียงข้างอาจารย์และนักวิจัยในกลุ่ม PTEM</h2>
+        </div>
+
+        <div class="tile researcher-layout reveal">
+          <div class="mentor-card">
+            <div class="mentor-identity">
+              <div class="mentor-avatar" aria-hidden="true">อ.เซล</div>
+              <div>
+                <h3 class="mentor-name">อ.อดิศักดิ์ ไสยสุข (อาจารย์เซล)</h3>
+                <p class="mentor-role">อาจารย์และนักวิจัยประจำกลุ่มวิจัย PTEM · ภาควิชาเคมีอุตสาหกรรม คณะวิทยาศาสตร์ มหาวิทยาลัยเชียงใหม่</p>
+              </div>
+            </div>
+            <p class="mentor-bio">
+              อาจารย์เซลทำงานวิจัยด้านการออกแบบและสังเคราะห์วัสดุคาร์บอนรูพรุนระดับลำดับชั้น วัสดุแม่เหล็กจากชีวมวลเหลือใช้ และเทคโนโลยีการบำบัดน้ำเสียร่วมกับเครือข่ายนักวิจัยในกลุ่ม PTEM โดยเปิดโอกาสให้นักศึกษาปริญญาตรีได้เรียนรู้กระบวนการคิดแบบนักวิจัย ตั้งคำถามจากการทดลองจริง วิเคราะห์ผลด้วยเครื่องมือมาตรฐาน และร่วมพัฒนาโครงงานที่เชื่อมโยงสู่การใช้งานระดับ Pilot Scale
+            </p>
+          </div>
+
+          <div class="mentor-pillars">
+            <div class="pillar-item">
+              <h4>
+                <i data-lucide="atom" width="16" height="16" aria-hidden="true"></i>
+                <span>ออกแบบวัสดุจากโจทย์จริง</span>
+              </h4>
+              <p>เรียนรู้การปรับแต่งรูพรุนและสมบัติแม่เหล็กของคาร์บอนให้เหมาะกับสารมลพิษแต่ละชนิด</p>
+            </div>
+            <div class="pillar-item">
+              <h4>
+                <i data-lucide="line-chart" width="16" height="16" aria-hidden="true"></i>
+                <span>วิเคราะห์ข้อมูลเชิงลึก</span>
+              </h4>
+              <p>ฝึกตีความกราฟ Isotherm, Kinetics, XRD, BET และ breakthrough curve อย่างเป็นระบบ</p>
+            </div>
+            <div class="pillar-item">
+              <h4>
+                <i data-lucide="settings-2" width="16" height="16" aria-hidden="true"></i>
+                <span>ทักษะควบคุมระบบ Pilot</span>
+              </h4>
+              <p>ได้สัมผัสการวางแผนขยายขนาดกระบวนการและควบคุมตัวแปรเชิงวิศวกรรมนอกเหนือจากห้องแล็บ</p>
+            </div>
+            <div class="pillar-item">
+              <h4>
+                <i data-lucide="users" width="16" height="16" aria-hidden="true"></i>
+                <span>บรรยากาศเป็นกันเอง</span>
+              </h4>
+              <p>ปรึกษาได้ใกล้ชิด ทั้งการวางแผนทดลอง การแก้ปัญหาระหว่างทำแล็บ และการเขียนรายงานปัญหาพิเศษ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Past Research Showcase -->
+    <section id="past-research" class="band alt">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <div class="eyebrow">
+            <i data-lucide="library" width="15" height="15" aria-hidden="true"></i>
+            <span>คลังผลงานวิจัยที่ผ่านมาของกลุ่ม PTEM</span>
+          </div>
+          <h2>สำรวจเปเปอร์วิจัยต้นแบบเพื่อจุดประกายไอเดียปัญหาพิเศษ</h2>
+          <p class="lede">
+            คัดสรรผลงานวิจัยที่ตีพิมพ์ในวารสารนานาชาติของกลุ่ม PTEM และเครือข่ายวิจัย จัดหมวดหมู่ตามกลุ่มวัสดุและโจทย์สิ่งแวดล้อม พร้อมระบบค้นหาและบันทึกหัวข้อที่สนใจ
+          </p>
+        </div>
+
+        <div class="filter-toolbar reveal">
+          <div class="search-row">
+            <div class="field-group">
+              <label class="field-label" for="research-search">ค้นหาชื่องานวิจัย วัสดุตั้งต้น สารมลพิษ หรือเทคนิคที่ใช้</label>
+              <div class="search-input-wrap">
+                <span class="search-icon" aria-hidden="true">
+                  <i data-lucide="search" width="18" height="18"></i>
+                </span>
+                <input
+                  type="search"
+                  id="research-search"
+                  class="search-input"
+                  placeholder="เช่น เปลือกข้าวโพด, Ciprofloxacin, Flow battery, N-rGO, กะลาแมคคาเดเมีย…"
+                  oninput="handleSearchInput(this.value)"
+                >
+              </div>
+            </div>
+            <button type="button" class="btn-secondary" onclick="resetFilters()">
+              <i data-lucide="rotate-ccw" width="16" height="16" aria-hidden="true"></i>
+              <span>ล้างตัวกรอง</span>
+            </button>
+          </div>
+
+          <div class="field-group">
+            <span class="field-label">กรองตามหมวดหมู่งานวิจัย</span>
+            <div class="filter-pills" role="group" aria-label="ตัวกรองหมวดหมู่งานวิจัย">
+              <button type="button" class="filter-btn" data-cat="all" aria-pressed="true" onclick="setCategory('all')">ทั้งหมด</button>
+              <button type="button" class="filter-btn" data-cat="biomass" aria-pressed="false" onclick="setCategory('biomass')">ชีวมวลเหลือใช้ &amp; บำบัดน้ำเสีย</button>
+              <button type="button" class="filter-btn" data-cat="emerging" aria-pressed="false" onclick="setCategory('emerging')">สารมลพิษอุบัติใหม่ &amp; ยาปฏิชีวนะ</button>
+              <button type="button" class="filter-btn" data-cat="energy" aria-pressed="false" onclick="setCategory('energy')">วัสดุกักเก็บพลังงาน &amp; ตัวเร่งปฏิกิริยา</button>
+              <button type="button" class="filter-btn" data-cat="advanced" aria-pressed="false" onclick="setCategory('advanced')">วัสดุสิ่งแวดล้อมขั้นสูง</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-bar">
+          <span id="results-summary" aria-live="polite">กำลังแสดงผลงานวิจัยทั้งหมด</span>
+        </div>
+
+        <div class="card-grid" id="research-grid"></div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <p><strong>ไม่พบผลงานวิจัยที่ตรงกับคำค้นหาหรือหมวดหมู่ที่เลือก</strong></p>
+          <p>ลองใช้คำค้นที่กว้างขึ้น เช่น ชื่อวัสดุตั้งต้น หรือสารมลพิษ หรือล้างตัวกรองเพื่อดูผลงานทั้งหมด</p>
+          <button type="button" class="btn-primary" onclick="resetFilters()">ล้างตัวกรองทั้งหมด</button>
+        </div>
+
+        <!-- Saved Interested Topics Tray (Persisted via notebookAppApi) -->
+        <div class="saved-tray reveal" aria-live="polite">
+          <div class="saved-header">
+            <h3>หัวข้อวิจัยที่บันทึกไว้ศึกษาต่อ</h3>
+            <div class="saved-actions">
+              <button type="button" class="btn-secondary" id="btn-export-saved" onclick="exportSavedTopics()">
+                <i data-lucide="download" width="16" height="16" aria-hidden="true"></i>
+                <span>ส่งออกรายการ (.txt)</span>
+              </button>
+              <button type="button" class="btn-ghost" id="btn-clear-saved" onclick="clearSavedTopics(this)">
+                ล้างรายการที่บันทึก
+              </button>
+            </div>
+          </div>
+          <div id="saved-container"></div>
+          <div class="status-toast" id="saved-status" hidden></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <p class="footer-title">กลุ่มวิจัย PTEM · งานวิจัยระดับปริญญาตรี</p>
+        <p>
+          หน้าแนะนำหัวข้อปัญหาพิเศษและคลังงานวิจัยสำหรับนักศึกษาปริญญาตรี ร่วมเรียนรู้กับ อ.อดิศักดิ์ ไสยสุข (อาจารย์เซล) นักวิจัยประจำกลุ่ม PTEM
+        </p>
+        <p>
+          หากสนใจหัวข้อใดสามารถบันทึกเก็บไว้เพื่อใช้ประกอบการพูดคุยผ่านช่องทางติดต่อของกลุ่มวิจัยได้โดยตรง
+        </p>
+      </div>
+      <div>
+        <p class="footer-title">แหล่งอ้างอิงข้อมูลงานวิจัยในหน้านี้</p>
+        <ol class="source-list">
+          <li>Removal of Reactive Black Dye in Water by Magnetic Mesoporous Carbon from Macadamia Nutshell — Adsorption Science &amp; Technology (2022)</li>
+          <li>Damdib, S., Siyasukh, A., Tonanon, N. et al. — Magnetic Biochar from Corn Husk Waste for Paraquat Removal, Adsorption Science &amp; Technology (2023)</li>
+          <li>Tantavanich, S., Siyasukh, A., Tonanon, N. et al. — Valorization of Hardboard Waste for Ciprofloxacin Removal, Chemical Engineering Science (2025)</li>
+          <li>Wongrueng, A., Rakruam, P., Siri, A., Siyasukh, A. — Porous Pig Bone Char for DBP Precursors Reduction, Water Science &amp; Technology (2019)</li>
+          <li>Siyasukh, A., Chimupala, Y., Tonanon, N. — Magnetic Hierarchical Porous Carbon Spheres for Methyl Orange Adsorption, Carbon (2018)</li>
+          <li>Pimraksa, K., Siyasukh, A. et al. — Geopolymer/Zeolite-P Materials from High-CaO Fly Ash, Biomass Ash &amp; Metakaolin</li>
+          <li>Sriboonnak, S., Wongrueng, A., Siyasukh, A. et al. — Trihalomethanes in Water Supply System, Int. J. Environ. Res. Public Health (2021)</li>
+          <li>Spherical Mesoporous Carbons (SMCs) as Electrocatalysts for Aqueous Organic Flow Battery, Int. J. Hydrogen Energy (2021)</li>
+          <li>Nitrogen-Doped Graphene Oxide &amp; Co-Nx Active Sites for ORR, Journal of Electroanalytical Chemistry (2022)</li>
+        </ol>
+      </div>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const PILOT_TRACKS = {
+      carbon: {
+        chartTitle: `ปริมาตรรูพรุนเมโซพอร์ (Vmeso) ของวัสดุคาร์บอนตามเงื่อนไขการผลิต`,
+        chartSource: `ที่มา: ข้อมูลจริงจาก Carbon (2018) และ Water Sci. & Tech. (2019)`,
+        chartUnit: `cm³/g`,
+        chartLabels: [`PBC-650 (650°C)`, `PBC-900 (900°C)`, `CF3-900 (N₂ 900°C)`, `ACF3-900 (CO₂ 900°C)`],
+        chartData: [0.24, 0.249, 0.21, 2.16],
+        steps: [
+          {
+            num: `01`,
+            title: `คัดเลือกวัตถุดิบและเตรียมสารตั้งต้น`,
+            sub: `ชีวมวลเหลือใช้หรือพอลิเมอร์ + เหล็กไนเตรต Fe(NO₃)₃`,
+            desc: `นักศึกษาจะได้เรียนรู้การบดคัดขนาดชีวมวล (เช่น เปลือกข้าวโพด กะลาแมคคาเดเมีย เศษไม้ หรือกระดูกหมู) หรือการเตรียมอิมัลชันแบบ Water-in-Oil จาก Resorcinol-Formaldehyde แล้วจุ่ม/ผสมสารละลาย Fe(NO₃)₃ เพื่อสร้างสมบัติแม่เหล็กและโครงข่ายรูพรุน`,
+            params: [`ขนาดอนุภาค: <250 µm`, `ความเข้มข้น Fe(NO₃)₃: 0.01–0.10 M`, `สารลดแรงตึงผิว: SPAN80 0.2–0.4 %vol`]
+          },
+          {
+            num: `02`,
+            title: `ควบคุมการเผาไพโรไลซิสและกระตุ้นรูพรุนระดับ Pilot`,
+            sub: `คุมอุณหภูมิ 550–900 °C ภายใต้แก๊ส N₂ หรือ CO₂`,
+            desc: `เรียนรู้การเดินเครื่องและตั้งโปรแกรมเตาเผาขนาดขยาย (Pilot-scale Furnace) ปรับอัตราการให้ความร้อนและอัตราการไหลของแก๊สไนโตรเจนหรือคาร์บอนไดออกไซด์ เพื่อเปลี่ยนสารตั้งต้นเป็นคาร์บอนที่มีโครงสร้างผลึกเหล็กแม่เหล็กและกราไฟต์`,
+            params: [`ช่วงอุณหภูมิ: 550–900 °C`, `บรรยากาศ: N₂ (คาร์บอไนซ์) / CO₂ (กระตุ้นรูพรุน)`, `เฟสแม่เหล็ก: Metallic Fe (2θ ≈ 45°)`]
+          },
+          {
+            num: `03`,
+            title: `ตรวจสอบคุณลักษณะวัสดุขั้นสูง (Characterization)`,
+            sub: `วิเคราะห์รูพรุน โครงสร้างผลึก และหมู่ฟังก์ชันพื้นผิว`,
+            desc: `ฝึกเตรียมตัวอย่างและตีความผลวิเคราะห์จากเครื่องมือวิทยาศาสตร์หลัก เช่น ไอโซเทอร์มการดูดซับแก๊ส N₂ (Type I/IV), ค่า BET, โครงสร้างผลึก XRD, ภาพ SEM-EDX และสเปกตรัม XPS/FTIR รวมถึงการวัดค่า pH_PZC`,
+            params: [`BET Surface Area & Vmeso`, `XRD / SEM-EDX`, `XPS / FTIR & pH_PZC`]
+          },
+          {
+            num: `04`,
+            title: `ควบคุมคุณภาพและประเมินความคุ้มค่าการผลิต`,
+            sub: `เปรียบเทียบสมบัติระหว่างชุดทดลอง Lab กับระดับ Pilot`,
+            desc: `ประเมินร้อยละผลได้ (Yield) ความสม่ำเสมอของสมบัติแม่เหล็ก และการแยกเก็บวัสดุด้วยแม่เหล็ก เพื่อปรับปรุงสูตรและสภาวะการผลิตให้เหมาะสมสำหรับการนำไปใช้จริงในระบบบำบัดน้ำเสีย`,
+            params: [`แยกเก็บด้วยแรงแม่เหล็ก`, `ความสม่ำเสมอของขนาดอนุภาค`, `ปรับปรุงสภาวะ Scale-up`]
+          }
+        ]
+      },
+      water: {
+        chartTitle: `ประสิทธิภาพการกำจัด Paraquat ของถ่านชีวภาพแม่เหล็ก MB-01-850 ตามค่า pH`,
+        chartSource: `ที่มา: ข้อมูลจริงจาก Adsorption Sci. & Tech. (2023) ที่ 40 mg/L, 2.0 g/L, 30 °C`,
+        chartUnit: `% การกำจัด`,
+        chartLabels: [`pH 4`, `pH 5`, `pH 7 (สภาวะเหมาะสม)`],
+        chartData: [0.33, 16.02, 93.48],
+        steps: [
+          {
+            num: `01`,
+            title: `คัดกรองสภาวะบำบัดแบบกะ (Batch Screening)`,
+            sub: `ศึกษาผลของ pH ปริมาณตัวดูดซับ อุณหภูมิ และความเข้มข้น`,
+            desc: `ทดสอบความสามารถในการดูดซับหรือเร่งปฏิกิริยาต่อสารมลพิษเป้าหมาย (เช่น สีย้อม RB5/MO, ยาปฏิชีวนะ Ciprofloxacin, พาราควอต หรือ DOM) เพื่อหาค่า pH ที่เหมาะสมที่สุดและกลไกแรงดึงดูดทางไฟฟ้าสถิตหรือการเติมเต็มรูพรุน`,
+            params: [`ช่วง pH ทดสอบ: 1–14`, `อุณหภูมิ: 30–50 °C`, `แบบจำลอง: Langmuir / Freundlich / Sips`]
+          },
+          {
+            num: `02`,
+            title: `เดินระบบคอลัมน์บำบัดต่อเนื่อง (Fixed-bed Pilot Column)`,
+            sub: `ควบคุมความลึกเบด อัตราการไหล และเก็บตัวอย่างตามเวลา`,
+            desc: `ขยายการทดสอบจากขวดเขย่าสู่คอลัมน์ไหลต่อเนื่อง ควบคุมความลึกชั้นวัสดุดูดซับและอัตราการไหลของน้ำเสีย เพื่อเก็บข้อมูลสร้างกราฟ Breakthrough Curve และคำนวณแบบจำลอง Bed-Depth Service Time (BDST)`,
+            params: [`จุดทะลุผ่าน tb: C/Cinlet = 0.05`, `จุดอิ่มตัว ts: C/Cinlet = 0.95`, `แบบจำลองคอลัมน์: BDST & Fractal-like BA`]
+          },
+          {
+            num: `03`,
+            title: `ทดสอบในน้ำธรรมชาติและตรวจวัดคุณภาพน้ำครบวงจร`,
+            sub: `วัดค่า DOC, UV-254, COD, FEEM และสารพลอยได้ THMs`,
+            desc: `ประเมินผลกระทบของอินทรียวัตถุและไอออนรบกวนในน้ำธรรมชาติจริง (เช่น น้ำผิวดินจากแม่น้ำปิง) เปรียบเทียบกับน้ำสังเคราะห์ พร้อมวิเคราะห์การลดลงของสารตั้งต้นไตรฮาโลมีเทน (THMs) และค่าความต้องการออกซิเจนทางเคมี (COD)`,
+            params: [`ลด COD จาก 17 → 5.1 mg/L (MB-01-850)`, `ลด UV-254 & DOC (THMs study)`, `สเปกตรัม FEEM (>250/>380 nm)`]
+          },
+          {
+            num: `04`,
+            title: `การแยกเก็บด้วยแม่เหล็กและฟื้นฟูสภาพวัสดุใช้ซ้ำ`,
+            sub: `ทดสอบการชะล้างและใช้งานซ้ำต่อเนื่องอย่างน้อย 4 วัฏจักร`,
+            desc: `ฝึกออกแบบขั้นตอนการแยกตัวดูดซับออกจากน้ำด้วยแม่เหล็ก และฟื้นฟูสภาพ (Regeneration) ด้วยสารละลาย NaOH, เอทานอล 50% หรือความร้อน เพื่อลดต้นทุนการบำบัดน้ำเสียในระยะยาว`,
+            params: [`ชะล้างด้วย NaOH (0.1–1.0 M) / Ethanol 50%`, `ฟื้นฟูด้วยความร้อน (Thermal)`, `ทดสอบซ้ำ ≥ 4 รอบการใช้งาน`]
+          }
+        ]
+      }
+    };
+
+    const PAPERS = [
+      {
+        id: `mmc-rb5`,
+        title: `ถ่านเมโซพอรัสแม่เหล็กจากกะลาแมคคาเดเมียสำหรับกำจัดสีย้อม Reactive Black 5`,
+        enTitle: `Removal of Reactive Black Dye in Water by Magnetic Mesoporous Carbon from Macadamia Nutshell`,
+        journal: `Adsorption Science & Technology`,
+        year: `2022`,
+        categories: [`biomass`],
+        categoryLabels: [`ชีวมวลเหลือใช้ & บำบัดน้ำเสีย`],
+        material: `กะลาแมคคาเดเมีย + Fe(NO₃)₃ (MMC-850)`,
+        target: `สีย้อม Reactive Black 5 (RB5)`,
+        summary: `สังเคราะห์ถ่านคาร์บอนเมโซพอรัสแม่เหล็กจากกะลาแมคคาเดเมียที่มีลิกนินสูงที่อุณหภูมิ 850 °C ได้เฟสเหล็กโลหะที่แยกออกจากน้ำเสียได้ง่ายด้วยแม่เหล็ก`,
+        details: `ผลวิเคราะห์ XRD ยืนยันพีคของ Metallic Fe ที่ 2θ ≈ 45° โดยโครงสร้างเมโซพอร์ของ MMC-850 มีบทบาทหลักในการดูดซับโมเลกุลสีย้อม RB5 แบบเติมเต็มรูพรุน (Pore filling) พฤติกรรมการดูดซับสอดคล้องกับไอโซเทอร์มของ Langmuir และจลนพลศาสตร์แบบ Elovich เป็นกระบวนการดูดซับที่เกิดขึ้นได้เองและคายความร้อน สามารถฟื้นฟูสภาพด้วยความร้อนได้`
+      },
+      {
+        id: `cornhusk-pq`,
+        title: `ถ่านชีวภาพแม่เหล็กจากเปลือกข้าวโพดเหลือใช้สำหรับกำจัดสารกำจัดวัชพืชพาราควอต`,
+        enTitle: `Efficient Removal of Paraquat Pollutants Using Magnetic Biochar Derived from Corn Husk Waste`,
+        journal: `Adsorption Science & Technology (Damdib et al.)`,
+        year: `2023`,
+        categories: [`biomass`, `emerging`],
+        categoryLabels: [`ชีวมวลเหลือใช้ & บำบัดน้ำเสีย`, `สารมลพิษอุบัติใหม่ & ยาปฏิชีวนะ`],
+        material: `เปลือกข้าวโพด + Fe(NO₃)₃ 0.10 M (MB-01-850)`,
+        target: `สารกำจัดวัชพืช Paraquat (PQ)`,
+        summary: `เปลี่ยนเปลือกข้าวโพดเหลือทิ้งทางการเกษตรเป็นถ่านชีวภาพแม่เหล็ก ลดการเผาทำลายที่ก่อให้เกิด PM2.5 และใช้กำจัดพาราควอตในน้ำสังเคราะห์และน้ำธรรมชาติได้สูงถึง 93.48% ที่ pH 7`,
+        details: `ทดสอบความเข้มข้น Fe(NO₃)₃ (0.01–0.10 M) และอุณหภูมิ 550–850 °C พบว่า MB-01-850 ให้ผลดีที่สุด ค่า pH มีผลชัดเจนโดยประสิทธิภาพเพิ่มจาก 0.33% (pH 4) และ 16.02% (pH 5) เป็น 93.48% ที่ pH 7 (qe = 22.50 mg/g ที่ความเข้มข้น 40 mg/L) ในน้ำธรรมชาติมีความจุ 31.63 mg/g พร้อมช่วยลดค่า COD จาก 17 เหลือ 5.1 mg/L และฟื้นฟูซ้ำได้ 4 รอบด้วย NaOH`
+      },
+      {
+        id: `hardboard-cip`,
+        title: `การเพิ่มมูลค่าเศษแผ่นใยไม้อัดแข็งเป็นถ่านชีวภาพสำหรับกำจัดยาปฏิชีวนะ Ciprofloxacin`,
+        enTitle: `Valorization of Hardboard Waste for Ciprofloxacin Removal (Batch & Fixed-Bed Column)`,
+        journal: `Chemical Engineering Science (Tantavanich et al.)`,
+        year: `2025`,
+        categories: [`emerging`, `biomass`],
+        categoryLabels: [`สารมลพิษอุบัติใหม่ & ยาปฏิชีวนะ`, `ชีวมวลเหลือใช้ & บำบัดน้ำเสีย`],
+        material: `เศษแผ่นใยไม้อัดแข็ง (HC-BI-800)`,
+        target: `ยาปฏิชีวนะ Ciprofloxacin (CIP)`,
+        summary: `นำขยะแผ่นใยไม้อัดแข็งมาไพโรไลซิสที่ 600–800 °C ได้ถ่านชีวภาพที่มีทั้งไมโครพอร์และเมโซพอร์ ทดสอบทั้งแบบกะและคอลัมน์เบดนิ่ง (BDST) รวมถึงความเข้มข้นต่ำระดับ 20–60 ppb`,
+        details: `ไอโซเทอร์มการดูดซับแก๊ส N₂ เป็นแบบผสม Type-I และ Type-IV แบบจำลอง Sips อธิบายข้อมูลสมดุลได้ดีที่สุดทุกช่วงอุณหภูมิ (30–50 °C) ในระดับคอลัมน์แบบต่อเนื่องใช้แบบจำลอง BDST (tb ที่ C/Cinlet = 0.05 และ ts ที่ 0.95) และแบบจำลอง Fractal-like BA ซึ่งทำนายผลส่วนใหญ่คลาดเคลื่อนไม่เกิน 10% และฟื้นฟูสภาพด้วยเอทานอล 50% ได้หลายรอบ`
+      },
+      {
+        id: `pigbone-dbp`,
+        title: `ถ่านกระดูกหมูพรุนสำหรับลดสารตั้งต้นสารพลอยได้จากการฆ่าเชื้อโรค (DBPs) ในน้ำผิวดิน`,
+        enTitle: `Synthesized Porous Pig Bone Char (PBC-900) for Reduction of DBP Precursors from Surface Water`,
+        journal: `Water Science & Technology (Wongrueng et al.)`,
+        year: `2019`,
+        categories: [`biomass`],
+        categoryLabels: [`ชีวมวลเหลือใช้ & บำบัดน้ำเสีย`],
+        material: `ถ่านกระดูกหมูพรุน (PBC-900 °C)`,
+        target: `อินทรียวัตถุละลายน้ำ (DOM) & กรดฮิวมิก`,
+        summary: `ไพโรไลซิสกระดูกหมูบดละเอียดภายใต้บรรยากาศไนโตรเจนที่ 900 °C ได้โครงสร้างเมโซพอร์สูง สามารถกำจัด DOM จากน้ำแม่น้ำปิงได้ราว 70–80%`,
+        details: `แม้ PBC-900 °C มีพื้นที่ผิว BET (78.00 m²/g) ต่ำกว่า PBC-650 °C (100.63 m²/g) แต่มีปริมาตรเมโซพอร์สูงกว่า (0.2490 cm³/g) ซึ่งเอื้อต่อการจับโมเลกุลขนาดใหญ่ของกรดฮิวมิก (ยืนยันด้วย FEEM) การดูดซับสอดคล้องกับจลนพลศาสตร์อันดับสองเทียม (19.97 mg/g ภายใน 1 ชม.) และไอโซเทอร์มแบบ Freundlich แบบหลายชั้น`
+      },
+      {
+        id: `mhpc-mo`,
+        title: `ทรงกลมคาร์บอนรูพรุนลำดับชั้นแม่เหล็ก (MHPC Spheres) สำหรับดูดซับสีย้อม Methyl Orange สูงพิเศษ`,
+        enTitle: `Magnetic Hierarchical Porous Carbon Spheres with Graphitic Features for High MO Adsorption`,
+        journal: `Carbon (Siyasukh, Chimupala, Tonanon)`,
+        year: `2018`,
+        categories: [`advanced`],
+        categoryLabels: [`วัสดุสิ่งแวดล้อมขั้นสูง`],
+        material: `คาร์บอนทรงกลมกระตุ้นด้วย CO₂ (ACF3-900)`,
+        target: `สีย้อม Methyl Orange (MO)`,
+        summary: `เตรียมคาร์บอนทรงกลมแบบไร้แม่แบบด้วยวิธีอิมัลชัน Water-in-Oil ร่วมกับโซลเจล Resorcinol-Formaldehyde และกระตุ้นด้วย CO₂ ที่ 900 °C ได้ความจุดูดซับสูงถึง 1,522.6 mg/g`,
+        details: `การปรับปริมาณ SPAN80 (0.2–0.4 %vol) ควบคุมขนาดทรงกลมคาร์บอนได้ในช่วง 103–259 µm การแช่อะซิโตนทันทีหลังโซลเจลช่วยป้องกันฟิล์มบางคลุมผิว และการกระตุ้นด้วย CO₂ ที่ 900 °C สร้างปริมาตรเมโซพอร์สูงถึง 2.16 cm³/g ร่วมกับลักษณะกราไฟต์และความไวต่อแม่เหล็ก สามารถนำกลับมาใช้ซ้ำได้อย่างน้อย 4 รอบ`
+      },
+      {
+        id: `gp-zp`,
+        title: `วัสดุผสมจีโอโพลิเมอร์-ซีโอไลต์ พี (GP-ZP) จากเถ้าลอยแคลเซียมสูง เถ้าชีวมวล และเมตาเคโอลิน`,
+        enTitle: `Geopolymer/Zeolite-P Composites via Hydrothermal Process for Environmental Clean Up`,
+        journal: `Waste Valorization & Environmental Materials (Pimraksa, Siyasukh et al.)`,
+        year: `2023`,
+        categories: [`advanced`],
+        categoryLabels: [`วัสดุสิ่งแวดล้อมขั้นสูง`],
+        material: `เถ้าลอย + เถ้าชีวมวล + เมตาเคโอลิน (GP-ZP)`,
+        target: `สีย้อม Methyl Orange (MO)`,
+        summary: `นำกากอุตสาหกรรมและเถ้าชีวมวลมาผ่านกระบวนการจีโอโพลิเมอไรเซชันร่วมกับไฮโดรเทอร์มอล (100 °C) ได้วัสดุผสมที่มีกำลังอัดสูงถึง 26.9 MPa และกำจัดสีย้อม MO ได้ 98.9%`,
+        details: `ควบคุมอัตราส่วนโมลาร์ Si/Al คงที่เท่ากับ 6.0 และกระตุ้นด้วยสารละลายโซเดียมซิลิเกตกับ NaOH 9.0 M พบว่าแบบผง (Powder) ขนาด 1.0 g สามารถกำจัด MO เข้มข้น 20 mg/L ได้ถึง 97% (และ 98.9% ที่ 5.0 g) ในขณะที่แบบก้อน (Bulk) ต้องใช้ 10.0 g เนื่องจากพื้นที่สัมผัสผิวและปริมาณซีโอไลต์ที่เกิดขึ้นต่างกัน`
+      },
+      {
+        id: `thms-water`,
+        title: `การติดตามสารไตรฮาโลมีเทน (THMs) และอินทรียวัตถุละลายน้ำในระบบผลิตและจ่ายน้ำประปา`,
+        enTitle: `Trihalomethanes in Water Supply System and Water Distribution Networks`,
+        journal: `Int. J. Environ. Res. Public Health (Sriboonnak, Siyasukh et al.)`,
+        year: `2021`,
+        categories: [`emerging`],
+        categoryLabels: [`สารมลพิษอุบัติใหม่ & ยาปฏิชีวนะ`],
+        material: `ระบบประปา (Coagulation/Flocculation & Disinfection)`,
+        target: `THMs (CF, BDCM, DBCM, BF) & DOC`,
+        summary: `ประเมินประสิทธิภาพหน่วยบำบัดน้ำประปาในจังหวัดเชียงใหม่ทั้งฤดูฝนและฤดูแล้ง พบการลดค่า DOC ลง 58.09% และค่าการดูดกลืนแสง UV-254 ลง 74.63%`,
+        details: `วิเคราะห์องค์ประกอบสารอินทรีย์จากแหล่งน้ำผิวดินด้วยเทคนิค FEEM (>250/>380 nm) และค่า SUVA (>2 L/mg·m) ชี้ให้เห็นสารกลุ่มกรดฮิวมิก หลังผ่านกระบวนการสร้างตะกอนและฆ่าเชื้อพบคลอโรฟอร์ม (CF) เป็นชนิดหลักของ THMs แต่ระดับ TTHMs ของน้ำประปาที่ผ่านระบบบำบัดปลอดภัยตามเกณฑ์มาตรฐาน (GVs < 1.0)`
+      },
+      {
+        id: `aofb-smc`,
+        title: `ตัวเร่งปฏิกิริยาไฟฟ้าคาร์บอนเมโซพอรัสทรงกลม (SMCs) สำหรับแบตเตอรี่ไหลเวียนอินทรีย์ในน้ำ`,
+        enTitle: `Spherical Mesoporous Carbons as Electrocatalysts for Aqueous Organic Flow Batteries (AOFB)`,
+        journal: `International Journal of Hydrogen Energy`,
+        year: `2021`,
+        categories: [`energy`],
+        categoryLabels: [`วัสดุกักเก็บพลังงาน & ตัวเร่งปฏิกิริยา`],
+        material: `คาร์บอนเมโซพอรัสทรงกลม (SMCs) บน Carbon Cloth`,
+        target: `ขั้วไฟฟ้า AOFB (สารละลายควิโนน AQS และ BQDS)`,
+        summary: `เคลือบ SMCs (คาร์บอน 85.69 wt%) บนผ้าคาร์บอนที่ปริมาณ 2 mg/cm² ร่วมกับ Nafion 20 wt% ให้ความหนาแน่นกำลังไฟฟ้าสูงสุด 12.15 mW/cm² (สูงกว่าผ้าคาร์บอนเปล่า 1.7 เท่า)`,
+        details: `SMCs เร่งปฏิกิริยารีดอกซ์แบบผันกลับได้เร็วทั้งในระบบ AQS และ BQDS โดยมีค่าคงที่อัตราจลนพลศาสตร์ของ BQDS เท่ากับ 9.73 × 10⁻⁴ cm/s (สูงกว่า Glassy Carbon ประมาณ 100 เท่า) และให้กำลังไฟฟ้าจำเพาะราว 6.1 W/g เหนือกว่า Vulcan carbon black และกราฟีน`
+      },
+      {
+        id: `co-nrgo`,
+        title: `กราฟีนออกไซด์เจือไนโตรเจนและโคบอลต์ (Co/N-rGO) เพื่อเป็นตำแหน่งกัมมันต์สำหรับปฏิกิริยา ORR`,
+        enTitle: `Proposed Co-Nx Configurations on Nitrogen-Doped Reduced Graphene Oxide for Oxygen Reduction Reaction`,
+        journal: `Journal of Electroanalytical Chemistry`,
+        year: `2022`,
+        categories: [`energy`],
+        categoryLabels: [`วัสดุกักเก็บพลังงาน & ตัวเร่งปฏิกิริยา`],
+        material: `Co/N-rGO (สังเคราะห์ด้วยยูเรียที่ 300–800 °C)`,
+        target: `ปฏิกิริยารีดักชันออกซิเจน (ORR Electrocatalyst)`,
+        summary: `เจือไนโตรเจนลงในกราฟีนออกไซด์ด้วยยูเรียและตรึงโคบอลต์ด้วยวิธี SEA เพื่อสร้างโครงสร้าง Co-Nx เป็นตำแหน่งกัมมันต์สำหรับการเร่งปฏิกิริยาไฟฟ้า ORR`,
+        details: `ผลวิเคราะห์ XPS จำแนกชนิดไนโตรเจน ได้แก่ Pyridinic-N (398.5 eV), Pyrrolic-N (400.1–400.5 eV) และ Graphitic-N (401.5–401.6 eV) โดย NG300 เก็บปริมาณไนโตรเจนได้มากกว่า NG800 และหลังจากตรึงโคบอลต์พบว่า Pyridinic-N เป็นองค์ประกอบหลักของ Co/NG300 และ Co/NG800 ส่งเสริมประสิทธิภาพ ORR`
+      }
+    ];
+
+    let currentTrack = `carbon`;
+    let currentStepIdx = 0;
+    let currentCategory = `all`;
+    let currentSearch = ``;
+    let savedPaperIds = [];
+    let pilotChartInstance = null;
+    const expandedPaperIds = new Set();
+
+    function getToken(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function selectTrack(trackKey) {
+      if (!PILOT_TRACKS[trackKey]) return;
+      currentTrack = trackKey;
+      currentStepIdx = 0;
+      const btnCarbon = document.getElementById(`track-btn-carbon`);
+      const btnWater = document.getElementById(`track-btn-water`);
+      if (btnCarbon) btnCarbon.setAttribute(`aria-pressed`, trackKey === `carbon` ? `true` : `false`);
+      if (btnWater) btnWater.setAttribute(`aria-pressed`, trackKey === `water` ? `true` : `false`);
+      renderWorkbench();
+      persistSavedState();
+    }
+
+    function selectStep(idx) {
+      currentStepIdx = idx;
+      renderWorkbenchSteps();
+      renderStepDetail();
+      persistSavedState();
+    }
+
+    function renderWorkbench() {
+      renderWorkbenchSteps();
+      renderStepDetail();
+      renderPilotChart();
+    }
+
+    function renderWorkbenchSteps() {
+      const listEl = document.getElementById(`step-list`);
+      if (!listEl) return;
+      const track = PILOT_TRACKS[currentTrack];
+      listEl.innerHTML = track.steps.map((step, idx) => `
+        <button type="button" class="step-btn" aria-pressed="${idx === currentStepIdx ? `true` : `false`}" onclick="selectStep(${idx})">
+          <span class="step-num">${step.num}</span>
+          <span>
+            <span class="step-title">${step.title}</span>
+            <span class="step-sub">${step.sub}</span>
+          </span>
+        </button>
+      `).join(``);
+    }
+
+    function renderStepDetail() {
+      const track = PILOT_TRACKS[currentTrack];
+      const step = track.steps[currentStepIdx] || track.steps[0];
+      const titleEl = document.getElementById(`step-detail-title`);
+      const descEl = document.getElementById(`step-detail-desc`);
+      const paramsEl = document.getElementById(`step-detail-params`);
+      if (titleEl) titleEl.textContent = `ขั้นตอนที่ ${step.num}: ${step.title}`;
+      if (descEl) descEl.textContent = step.desc;
+      if (paramsEl) {
+        paramsEl.innerHTML = step.params.map((p) => `<span class="chip">${p}</span>`).join(``);
+      }
+    }
+
+    function renderPilotChart() {
+      const track = PILOT_TRACKS[currentTrack];
+      const titleEl = document.getElementById(`chart-title`);
+      const srcEl = document.getElementById(`chart-source`);
+      const canvas = document.getElementById(`pilotChart`);
+      if (titleEl) titleEl.textContent = track.chartTitle;
+      if (srcEl) srcEl.textContent = track.chartSource;
+      if (!canvas || typeof Chart === `undefined`) return;
+
+      const cPrimary = getToken(`--data-1`) || `#6d44b8`;
+      const cSecondary = getToken(`--data-2`) || `#9d4c8b`;
+      const cContext = getToken(`--data-context`) || `#b7aacf`;
+      const cGrid = getToken(`--outline-variant`) || `#e4dbf3`;
+      const cText = getToken(`--on-surface-variant`) || `#55496b`;
+
+      const barColors = track.chartData.map((_, i) =>
+        i === track.chartData.length - 1 ? (currentTrack === `carbon` ? cPrimary : cSecondary) : cContext
+      );
+
+      if (pilotChartInstance) {
+        pilotChartInstance.destroy();
+      }
+
+      pilotChartInstance = new Chart(canvas.getContext(`2d`), {
+        type: `bar`,
+        data: {
+          labels: track.chartLabels,
+          datasets: [{
+            label: track.chartUnit,
+            data: track.chartData,
+            backgroundColor: barColors,
+            borderRadius: 6,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.parsed.y} ${track.chartUnit}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: cText, font: { family: `'Noto Sans Thai', sans-serif`, size: 12 } }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: cGrid },
+              ticks: {
+                color: cText,
+                font: { family: `'IBM Plex Mono', 'Noto Sans Thai', monospace`, size: 11 }
+              },
+              title: {
+                display: true,
+                text: track.chartUnit,
+                color: cText,
+                font: { family: `'Noto Sans Thai', sans-serif`, size: 12 }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll(`.filter-btn`).forEach((btn) => {
+        btn.setAttribute(`aria-pressed`, btn.dataset.cat === cat ? `true` : `false`);
+      });
+      renderPapers();
+    }
+
+    function handleSearchInput(val) {
+      currentSearch = (val || ``).trim().toLowerCase();
+      renderPapers();
+    }
+
+    function resetFilters() {
+      currentCategory = `all`;
+      currentSearch = ``;
+      const searchEl = document.getElementById(`research-search`);
+      if (searchEl) searchEl.value = ``;
+      document.querySelectorAll(`.filter-btn`).forEach((btn) => {
+        btn.setAttribute(`aria-pressed`, btn.dataset.cat === `all` ? `true` : `false`);
+      });
+      renderPapers();
+    }
+
+    function togglePaperDetail(id) {
+      if (expandedPaperIds.has(id)) {
+        expandedPaperIds.delete(id);
+      } else {
+        expandedPaperIds.add(id);
+      }
+      renderPapers();
+    }
+
+    async function toggleBookmark(id) {
+      const idx = savedPaperIds.indexOf(id);
+      if (idx === -1) {
+        savedPaperIds.push(id);
+      } else {
+        savedPaperIds.splice(idx, 1);
+      }
+      await persistSavedState();
+      renderPapers();
+      renderSavedTray();
+    }
+
+    async function removeSavedTopic(id) {
+      savedPaperIds = savedPaperIds.filter((item) => item !== id);
+      await persistSavedState();
+      renderPapers();
+      renderSavedTray();
+    }
+
+    async function clearSavedTopics(btn) {
+      if (!savedPaperIds.length) return;
+      if (btn && btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `กดอีกครั้งเพื่อยืนยันการล้าง`;
+        setTimeout(() => {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `ล้างรายการที่บันทึก`;
+          }
+        }, 3500);
+        return;
+      }
+      if (btn) {
+        btn.dataset.armed = `false`;
+        btn.textContent = `ล้างรายการที่บันทึก`;
+      }
+      savedPaperIds = [];
+      await persistSavedState();
+      renderPapers();
+      renderSavedTray();
+    }
+
+    function exportSavedTopics() {
+      const statusEl = document.getElementById(`saved-status`);
+      if (!savedPaperIds.length) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = `ยังไม่มีหัวข้อที่บันทึกไว้ กรุณากด "บันทึกหัวข้อ" บนการ์ดงานวิจัยที่สนใจก่อนส่งออก`;
+        }
+        return;
+      }
+      const chosen = PAPERS.filter((p) => savedPaperIds.includes(p.id));
+      const lines = [
+        `รายการหัวข้อวิจัยกลุ่ม PTEM ที่บันทึกไว้ศึกษาต่อ`,
+        `==================================================`,
+        ...chosen.map((p, i) => `${i + 1}. ${p.title} (${p.journal}, ${p.year})\n   วัสดุ: ${p.material} | เป้าหมาย: ${p.target}`)
+      ];
+      const textContent = lines.join(`\n\n`);
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: textContent,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `ptem_saved_topics.txt`
+        });
+      }
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = `ส่งออกรายการหัวข้อที่สนใจ (${chosen.length} รายการ) เรียบร้อยแล้ว`;
+      }
+    }
+
+    async function persistSavedState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            savedPaperIds: savedPaperIds,
+            currentTrack: currentTrack,
+            currentStepIdx: currentStepIdx
+          });
+        } catch (err) {
+          // Safe fallback in standalone preview
+        }
+      }
+    }
+
+    function renderPapers() {
+      const gridEl = document.getElementById(`research-grid`);
+      const emptyEl = document.getElementById(`empty-state`);
+      const summaryEl = document.getElementById(`results-summary`);
+      if (!gridEl) return;
+
+      const filtered = PAPERS.filter((paper) => {
+        const matchCat = currentCategory === `all` || paper.categories.includes(currentCategory);
+        if (!matchCat) return false;
+        if (!currentSearch) return true;
+        const haystack = [
+          paper.title,
+          paper.enTitle,
+          paper.journal,
+          paper.year,
+          paper.material,
+          paper.target,
+          paper.summary,
+          paper.details,
+          ...paper.categoryLabels
+        ].join(` `).toLowerCase();
+        return haystack.includes(currentSearch);
+      });
+
+      if (summaryEl) {
+        summaryEl.textContent = `พบ ${filtered.length} ผลงานวิจัยจากทั้งหมด ${PAPERS.length} รายการ`;
+      }
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = ``;
+        if (emptyEl) emptyEl.hidden = false;
+        return;
+      }
+      if (emptyEl) emptyEl.hidden = true;
+
+      gridEl.innerHTML = filtered.map((paper) => {
+        const isExpanded = expandedPaperIds.has(paper.id);
+        const isSaved = savedPaperIds.includes(paper.id);
+        return `
+          <div class="card-wrapper">
+            <article class="paper-card">
+              <div>
+                <div class="paper-meta">
+                  <div class="paper-tags">
+                    ${paper.categoryLabels.map((lbl) => `<span class="chip">${lbl}</span>`).join(``)}
+                  </div>
+                  <span class="paper-year">${paper.year}</span>
+                </div>
+                <h3 class="paper-title paper-title-spaced">${paper.title}</h3>
+                <p class="paper-journal">${paper.journal}</p>
+                <p class="paper-summary paper-summary-spaced">${paper.summary}</p>
+              </div>
+
+              <div>
+                <div class="paper-specs">
+                  <div class="spec-item">
+                    <strong>วัสดุหลัก</strong>
+                    <span>${paper.material}</span>
+                  </div>
+                  <div class="spec-item">
+                    <strong>เป้าหมาย / งานประยุกต์</strong>
+                    <span>${paper.target}</span>
+                  </div>
+                </div>
+
+                <div class="paper-drawer" ${isExpanded ? `` : `hidden`}>
+                  <p><strong>ประเด็นสำคัญจากการทดลอง:</strong> ${paper.details}</p>
+                  <p class="paper-en-ref"><em>อ้างอิงเรื่อง: ${paper.enTitle}</em></p>
+                </div>
+
+                <div class="paper-actions">
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    aria-expanded="${isExpanded ? `true` : `false`}"
+                    onclick="togglePaperDetail('${paper.id}')"
+                  >
+                    <span>${isExpanded ? `ซ่อนรายละเอียด` : `อ่านสาระสำคัญเชิงลึก`}</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-bookmark"
+                    aria-pressed="${isSaved ? `true` : `false`}"
+                    onclick="toggleBookmark('${paper.id}')"
+                  >
+                    <span>${isSaved ? `บันทึกแล้ว` : `บันทึกหัวข้อ`}</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function renderSavedTray() {
+      const container = document.getElementById(`saved-container`);
+      const exportBtn = document.getElementById(`btn-export-saved`);
+      const clearBtn = document.getElementById(`btn-clear-saved`);
+      const statusEl = document.getElementById(`saved-status`);
+      if (statusEl) statusEl.hidden = true;
+      if (!container) return;
+
+      const chosen = PAPERS.filter((p) => savedPaperIds.includes(p.id));
+      if (exportBtn) exportBtn.disabled = chosen.length === 0;
+      if (clearBtn) clearBtn.disabled = chosen.length === 0;
+
+      if (chosen.length === 0) {
+        container.innerHTML = `<p class="saved-empty-msg">ยังไม่ได้บันทึกหัวข้อวิจัย — สามารถกดปุ่ม "บันทึกหัวข้อ" บนการ์ดผลงานวิจัยด้านบนเพื่อรวบรวมหัวข้อที่สนใจนำไปปรึกษาต่อได้</p>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="saved-list">
+          ${chosen.map((p) => `
+            <span class="saved-item">
+              <span>${p.title}</span>
+              <button type="button" class="saved-remove" aria-label="ลบ ${p.title}" onclick="removeSavedTopic('${p.id}')">&times;</button>
+            </span>
+          `).join(``)}
+        </div>
+      `;
+    }
+
+    function setupRevealAnimations() {
+      const els = document.querySelectorAll(`.reveal`);
+      if (!(`IntersectionObserver` in window)) {
+        els.forEach((el) => el.classList.add(`visible`));
+        return;
+      }
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(`visible`);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach((el) => observer.observe(el));
+    }
+
+    async function initApp() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const savedState = await window.notebookAppApi.getAppState();
+          if (savedState) {
+            if (Array.isArray(savedState.savedPaperIds)) {
+              savedPaperIds = savedState.savedPaperIds.filter((id) => PAPERS.some((p) => p.id === id));
+            }
+            if (savedState.currentTrack && PILOT_TRACKS[savedState.currentTrack]) {
+              currentTrack = savedState.currentTrack;
+              const btnCarbon = document.getElementById(`track-btn-carbon`);
+              const btnWater = document.getElementById(`track-btn-water`);
+              if (btnCarbon) btnCarbon.setAttribute(`aria-pressed`, currentTrack === `carbon` ? `true` : `false`);
+              if (btnWater) btnWater.setAttribute(`aria-pressed`, currentTrack === `water` ? `true` : `false`);
+            }
+            if (typeof savedState.currentStepIdx === `number` && savedState.currentStepIdx >= 0 && savedState.currentStepIdx < PILOT_TRACKS[currentTrack].steps.length) {
+              currentStepIdx = savedState.currentStepIdx;
+            }
+          }
+        } catch (err) {
+          savedPaperIds = [];
+        }
+      }
+      renderWorkbench();
+      renderPapers();
+      renderSavedTray();
+      setupRevealAnimations();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
